@@ -17,8 +17,8 @@ async function loginAndReply(redditUsername, redditPassword, postUrl, replyMessa
         await page.goto('https://www.reddit.com/login', { waitUntil: 'networkidle2' });
 
         // Type in the username and password
-        await page.type('#loginUsername', redditUsername, { delay: 100 });
-        await page.type('#loginPassword', redditPassword, { delay: 100 });
+        await page.type('efficiento001', redditUsername, { delay: 100 });
+        await page.type('fsfs', redditPassword, { delay: 100 });
 
         // Click the login button
         await page.click('button[type="submit"]');
