@@ -12,7 +12,7 @@ async function loginAndReply(redditUsername, redditPassword, postUrl, replyMessa
     const browser = await puppeteer.launch({ headless: false }); // Set to 'true' for headless mode
     const page = await browser.newPage();
 
-    
+
     try {
         // Go to Reddit login page
         await page.goto('https://www.reddit.com/login', { waitUntil: 'networkidle2' });
@@ -46,7 +46,7 @@ async function loginAndReply(redditUsername, redditPassword, postUrl, replyMessa
     }
 }
 
-// Add a simple GET route for the root URL
+// Add a GET route for the root URL
 app.get('/', (req, res) => {
     res.send('Welcome to the Reddit Bot API! Use the /post-reply endpoint to post a reply.');
 });
@@ -62,6 +62,7 @@ app.post('/post-reply', async (req, res) => {
     res.send('Bot has logged in and replied to the specified post!');
 });
 
+ // Add a POST route for the /post-reply endpoint
 const axios = require('axios');
 
 async function sendPostRequest() {
