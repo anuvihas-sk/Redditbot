@@ -45,6 +45,11 @@ async function loginAndReply(redditUsername, redditPassword, postUrl, replyMessa
     }
 }
 
+// Add a simple GET route for the root URL
+app.get('/', (req, res) => {
+    res.send('Welcome to the Reddit Bot API! Use the /post-reply endpoint to post a reply.');
+});
+
 app.post('/post-reply', async (req, res) => {
     const { username, password, postUrl, message } = req.body;
 
