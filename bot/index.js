@@ -1,3 +1,4 @@
+// index.js
 const express = require('express');
 const puppeteer = require('puppeteer');
 const bodyParser = require('body-parser');
@@ -15,10 +16,12 @@ async function loginAndReply(redditUsername, redditPassword, postUrl, replyMessa
     try {
         // Go to Reddit login page
         await page.goto('https://www.reddit.com/login', { waitUntil: 'networkidle2' });
+        console.log('Navigated to Reddit login page.');
 
         // Type in the username and password
-        await page.type('devx_123', redditUsername, { delay: 100 });
-        await page.type('devx_2005', redditPassword, { delay: 100 });
+        await page.type('#loginUsername', redditUsername, { delay: 100 });
+        await page.type('#loginPassword', redditPassword, { delay: 100 });
+        console.log('Entered username and password.');
 
         // Click the login button
         await page.click('button[type="submit"]');
@@ -28,20 +31,30 @@ async function loginAndReply(redditUsername, redditPassword, postUrl, replyMessa
 
         // Navigate to the post URL
         await page.goto(postUrl, { waitUntil: 'networkidle2' });
+        console.log(`Navigated to the post: ${postUrl}`);
+
+        // Wait for the comment box to appear
+        await page.waitForSelector('div[data-click-id="text"]', { timeout: 5000 });
+        console.log('Comment box found.');
 
         // Click the comment box to start typing a reply
         await page.click('div[data-click-id="text"]');
         await page.type('div[data-click-id="text"]', replyMessage);
+        console.log('Typed the reply message.');
 
         // Click the submit button
         await page.click('button[type="submit"]');
-        await page.waitForTimeout(3000); // Wait a bit to ensure the reply is posted
+        console.log('Clicked the submit button to post the reply.');
 
-        console.log('Replied to the post successfully!');
+        // Wait to ensure the reply is posted
+        await page.waitForTimeout(5000);
+        console.log('Waited for the reply to be posted.');
+
     } catch (error) {
-        console.error('An error occurred:', error);
+        console.error('An error occurred during the login and reply process:', error);
     } finally {
         await browser.close();
+        console.log('Browser closed.');
     }
 }
 
@@ -60,28 +73,6 @@ app.post('/post-reply', async (req, res) => {
     await loginAndReply(username, password, postUrl, message);
     res.send('Bot has logged in and replied to the specified post!');
 });
-
-const axios = require('axios');
-
-async function sendPostRequest() {
-    try {
-        const response = await axios.post('http://localhost:3000/post-reply', {
-            username: 'your_reddit_username',
-            password: 'your_reddit_password',
-            postUrl: 'https://www.reddit.com/r/test/comments/your_post_id',
-            message: 'This is a test reply!'
-        });
-
-        console.log('Response:', response.data);
-    } catch (error) {
-        console.error('Error sending request:', error);
-    }
-}
-
-// Optional: Call sendPostRequest to test it when you start the server
-// You can comment this out if you don't want it to run automatically
-sendPostRequest();
-
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
