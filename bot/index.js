@@ -12,6 +12,7 @@ async function loginAndReply(redditUsername, redditPassword, postUrl, replyMessa
     const browser = await puppeteer.launch({ headless: false }); // Set to 'true' for headless mode
     const page = await browser.newPage();
 
+    
     try {
         // Go to Reddit login page
         await page.goto('https://www.reddit.com/login', { waitUntil: 'networkidle2' });
