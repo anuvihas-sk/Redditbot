@@ -1,7 +1,6 @@
 const express = require('express');
 const puppeteer = require('puppeteer');
 const bodyParser = require('body-parser');
-const axios = require('axios');
 
 const app = express();
 const PORT = 3000;
@@ -9,18 +8,18 @@ const PORT = 3000;
 // Middleware to parse JSON request bodies
 app.use(bodyParser.json());
 
-// Function to log into Reddit and reply to a post
 async function loginAndReply(redditUsername, redditPassword, postUrl, replyMessage) {
-    const browser = await puppeteer.launch({ headless: false }); // Set to true for headless mode
+    const browser = await puppeteer.launch({ headless: false }); // Set to 'true' for headless mode
     const page = await browser.newPage();
+
 
     try {
         // Go to Reddit login page
         await page.goto('https://www.reddit.com/login', { waitUntil: 'networkidle2' });
 
         // Type in the username and password
-        await page.type('input[name="username"]', redditUsername, { delay: 100 });
-        await page.type('input[name="password"]', redditPassword, { delay: 100 });
+        await page.type('username', redditUsername, { delay: 100 });
+        await page.type('password', redditPassword, { delay: 100 });
 
         // Click the login button
         await page.click('button[type="submit"]');
@@ -35,7 +34,7 @@ async function loginAndReply(redditUsername, redditPassword, postUrl, replyMessa
         await page.click('div[data-click-id="text"]');
         await page.type('div[data-click-id="text"]', replyMessage);
 
-        // Click the submit button to post the reply
+        // Click the submit button
         await page.click('button[type="submit"]');
         await page.waitForTimeout(3000); // Wait a bit to ensure the reply is posted
 
@@ -47,12 +46,11 @@ async function loginAndReply(redditUsername, redditPassword, postUrl, replyMessa
     }
 }
 
-// Route to display welcome message
+// Add a GET route for the root URL
 app.get('/', (req, res) => {
     res.send('Welcome to the Reddit Bot API! Use the /post-reply endpoint to post a reply.');
 });
 
-// Route to handle the post-reply request
 app.post('/post-reply', async (req, res) => {
     const { username, password, postUrl, message } = req.body;
 
@@ -64,13 +62,15 @@ app.post('/post-reply', async (req, res) => {
     res.send('Bot has logged in and replied to the specified post!');
 });
 
-// Example POST request using axios
+ // Add a POST route for the /post-reply endpoint
+const axios = require('axios');
+
 async function sendPostRequest() {
     try {
         const response = await axios.post('http://localhost:3000/post-reply', {
             username: 'your_reddit_username',
             password: 'your_reddit_password',
-            postUrl: 'https://www.reddit.com/r/test/comments/test_post_id',
+            postUrl: 'https://www.reddit.com/r/test/comments/your_post_id',
             message: 'This is a test reply!'
         });
 
@@ -82,7 +82,7 @@ async function sendPostRequest() {
 
 sendPostRequest();
 
-// Start the Express server
+
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+    console.log(Server is running on http://localhost:${PORT});
+}); 
