@@ -1,0 +1,26 @@
+{
+  "name": "redditbot",
+  "version": "1.0.0",
+  "description": "A Reddit bot that can log into a Reddit account and post a reply to any post.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anuvihas/redditbot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anuvihas/redditbot/issues"
+  },
+  "homepage": "https://github.com/anuvihas/redditbot#readme",
+  "dependencies": {
+    "axios": "^1.7.7",
+    "body-parser": "^1.20.3",
+    "express": "^4.21.1",
+    "puppeteer": "^23.6.0"
+  }
+}
