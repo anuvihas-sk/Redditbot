@@ -1,7 +1,3 @@
-Here's a sample `README.md` file for running a Reddit bot using an `index.js` file in a Node.js environment:
-
----
-
 # RedditBot
 
 A simple Reddit bot built using Node.js that interacts with the Reddit API to perform automated tasks such as posting, commenting, or fetching data.
@@ -116,6 +112,4 @@ Refer to the [snoowrap documentation](https://not-an-aardvark.github.io/snoowrap
 
 This project is licensed under the MIT License. See the `LICENSE` file for details.
 
----
 
-This `README.md` provides a clear and step-by-step guide on how to set up, configure, and run the Reddit bot. You can modify the examples and instructions based on the specific behavior of your bot.
